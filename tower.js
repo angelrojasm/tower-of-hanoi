@@ -1,5 +1,5 @@
 let counter = 0;
-
+let gameOver = false;
 let pegs = [];
 let diskArray = []; // this stores the disks
 const game = document.getElementById('game');
@@ -88,6 +88,8 @@ function makeMove() {
 	if (counter < pegHist.length) {
 		plotAll(pegHist[counter]);
 	} else {
+		gameOver = true;
+		clearInterval(makeMove);
 		alert('Tower is Finished');
 	}
 	counter++;
@@ -95,6 +97,10 @@ function makeMove() {
 
 function automaticMove() {
 	setInterval(() => {
-		makeMove();
+		if (gameOver) {
+			clearInterval(makeMove);
+		} else {
+			makeMove();
+		}
 	}, 300);
 }
